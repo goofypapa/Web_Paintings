@@ -1,6 +1,7 @@
 body{
     background: url("../img/piantingP.png")no-repeat;
     background-size: cover;
+    overflow: hidden;
 }
 /*#pianting li:nth-of-type(even){*/
     /*margin-left: 10px;*/
