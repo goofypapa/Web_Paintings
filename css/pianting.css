@@ -14,6 +14,9 @@ body{
 /*#pianting li:nth-of-type(odd) img{*/
     /*width: 2.5rem;*/
 /*}*/
+body div{
+    overflow: hidden;
+}
 #one,#two,#three{
     position: absolute;
 }
