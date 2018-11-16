@@ -13,7 +13,7 @@
     </script>
 </head>
 <body>
-<div id="blackShade"></div>
+<div id="blackShade" style="display: none"></div>
 <div id="chineseBj"></div>
 <div id="piantingBj"></div>
 <img id="back" src="img/indexBack.png" alt="" >
@@ -35,6 +35,9 @@
 </body>
 <script src="script/jquery-3.3.1.min.js"></script>
 <script>
+    if( window.history.length == 1 ){
+        $("#blackShade").show();
+    }
     var bjSize=document.getElementById("bg");
     console.log(bjSize.width);
     bjSize.width = window.screen.availWidth;
@@ -72,7 +75,9 @@
         open("#fanP img","pianting");
     });
     window.onload=function(){
-        $("#blackShade").fadeOut();
+        if( window.history.length == 1 ) {
+            $("#blackShade").fadeOut();
+        }
     }
 </script>
 </html>
