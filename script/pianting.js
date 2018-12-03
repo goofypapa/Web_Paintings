@@ -143,7 +143,7 @@ function getNum(text){
     var value = imgSrc.replace(/[^0-9]/ig,"");
     console.log(value);
     value=value-1;
-    window.location.href="piantingLunboNew.html?index="+value;
+    window.location.href="piantingLunboNew.html?resourceId="+value;
 }
 $("#one").click(function(){
     getNum("#one");

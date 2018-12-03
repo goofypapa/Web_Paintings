@@ -466,10 +466,6 @@
     <!--<div class="swiper-button-next"></div>-->
     <!--<div class="swiper-button-prev"></div>-->
 </div>
-
-
-
-
 <!-- Swiper JS -->
 <script src="../script/jquery-3.3.1.min.js"></script>
 <script src="../script/swiper.min.js"></script>
@@ -483,8 +479,6 @@
     $("#introduce").click(function(){
         $("#introduce").css("display","none");
     })
-
-
 </script>
 <!-- Initialize Swiper -->
 <script>
@@ -493,32 +487,50 @@
         var r = window.location.search.substr(1).match(reg);
         if(r!=null)return  unescape(r[2]); return null;
     }
-    //定义变量接收url参数
-    var picNum=GetQueryString("index");
-
-    if(picNum!=null&&picNum.toString().length>0)
+    var cardIdAll=[
+        ["eee511e8b1821d55f6b759e6c5001ba6"],[0],
+        ["eee611e8b1821d55f6b759e6428aeebb"],[1],
+        ["eee611e8b1821d55f6b759e6539d33cc"],[2],
+        ["eee611e8b1821d55f6b759e67644a98e"],[3],
+        ["eee611e8b1821d55f6b759e61ffb46b9"],[4],
+        ["eee611e8b1821d55f6b759e6657539dd"],[5],
+        ["eee611e8b1821d55f6b759e60f9bd6e8"],[6],
+        ["eee611e8b1821d55f6b759e6a2cb9690"],[7],
+        ["eee611e8b1821d55f6b759e6b4740121"],[8],
+        ["eee511e8b1821d55f6b759e6ff295447"],[9],
+        ["eee611e8b1821d55f6b759e689552f9f"],[10],
+        ["eee611e8b1821d55f6b759e632b3739a"],[11]
+    ];
+    var cardId=GetQueryString("resourceId");
+    // var cardId="eee611e8b1821d55f6b759e61ffb46b9";
+    if(cardId!=null&&cardId.toString().length>0)
     {
-        console.log(picNum);
+        console.log(cardId);
     }
-    //存储要显示的图片，该处可以进行修改
-    //   imgsdata={"list1":["chinese02.png"]}
+    var index;
+    var pageNum;
+    console.log(cardIdAll.length);
+    $.each(cardIdAll,function(idx){
+        if(cardIdAll[idx][0] == cardId){
+            index=idx/2;
+            console.log(idx)//idx为数组下标
+        }
+    });
+    console.log(index);
+    if( cardId.length==32){
+        pageNum=index;
+    }else{
+        pageNum=cardId;
+    }
 
 
     var swiper = new Swiper('.banner.swiper-container', {
-        // direction: 'vertical',
-        // pagination: {
-        //     el: '.banner.swiper-pagination',
-        //     clickable: true,
-        // },
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
-        initialSlide :picNum,
+        initialSlide :pageNum,
     });
-
-
-
     var mYswiper = new Swiper('.case.swiper-container',{
         zoom:true,
         width: window.innerWidth,
@@ -540,54 +552,9 @@
         },
 
     });
-
-    // $('.thumb img').click(function(){
-    //
-    //     clickIndex=$(this).index();
-    //从上面的imgsdata获取图片显示出来
-    // imglist=$(this).parent().attr('thumblist');
-    // imgs = imgsdata[imglist];
-    // for(i=0;i<imgs.length;i++){
-    //
-    //    mYswiper.virtual.appendSlide('<div class="swiper-zoom-container"><img src="../img/'+imgs[i]+'" /></div>');
-    //
-    // }
-    // var imgSrc=$(this).attr('src');
-    // var srcNum=imgSrc.replace(/^[^\d]*(\d+)[^\d]*$/, "$1");
-    // console.log($(this).attr('src'));
-    // mYswiper.virtual.appendSlide('<div class="swiper-zoom-container"><img src="../img/chinese'+srcNum+'.png" /></div>');
-    //
-    // mYswiper.slideTo(clickIndex);
-    // $('#origin-img').fadeIn('fast');
-    // $("#lunbo").fadeOut('fast');
-    // swiperStatus=true;
-
-    // })
-
-    //切换图状态禁止页面缩放
-    // document.addEventListener('touchstart',function (event) {
-    //     if(event.touches.length>1 && swiperStatus){
-    //         event.preventDefault();
-    //     }
-    // })
-    // var lastTouchEnd=0;
-    // document.addEventListener('touchend',function (event) {
-    //     var now=(new Date()).getTime();
-    //     if(now-lastTouchEnd<=300){
-    //         event.preventDefault();
-    //     }
-    //     lastTouchEnd=now;
-    // },false)
-    //
-    // document.addEventListener('touchmove',function(e){
-    //     if(swiperStatus){
-    //         e.preventDefault();
-    //     }
-    // })
-
 </script>
 <div id="chinese">
-    <a href="pianting.html">
+    <a href="#">
         <img src="../img/pianting.png" alt="">
     </a>
 </div>
@@ -600,6 +567,15 @@
 <script src="../script/pinchzoom.js"></script>
 <script type="text/javascript">
 
+    $.ajax({
+        type: "post",
+        url: "http://www.dadpat.com/file/list.do",
+        dataType: "jsonp",
+        data:{"path":"app/calendar/"+cardId+"/img"},
+        async: true,
+        success: function (data) {
+        }
+    });
     var clickTimeId;
     //点击遮罩层出现
     $(".pic img").click(function(){
@@ -628,6 +604,20 @@
             $("#box .page").remove();
             $("#box").css("display","none");
         }, 250);
+    })
+    //点击返回首页
+    $('#chinese').click(function(){
+        if(typeof(index) !== "undefined"){
+            console.log("111");
+            if( typeof( goofypapaGame ) != "undefined" && goofypapaGame ){
+                window.location.href='goofypapa://back';
+            }else{
+                window.android.exitApp()
+            }
+        }else{
+            window.location.href = 'pianting.html';
+        }
+
     })
 
 </script>

@@ -495,24 +495,66 @@
 </script>
 <!-- Initialize Swiper -->
 <script>
+    // function GetQueryString(name){
+    //     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    //     var r = window.location.search.substr(1).match(reg);
+    //     if(r!=null)return  unescape(r[2]); return null;
+    // }
+    //定义变量接收url参数
+    // var picNum=GetQueryString("index");
+    //js获取url参数
     function GetQueryString(name){
         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
         if(r!=null)return  unescape(r[2]); return null;
     }
-    //定义变量接收url参数
-    var picNum=GetQueryString("index");
+    //定义变量接收url参数，此处的变量名不能与url参数名相同,否则会报错不知道为啥
 
-    if(picNum!=null&&picNum.toString().length>0)
+
+
+    var cardIdAll=[
+        ["efa611e8b1821d55f6b759e60e4c21e9"],[0],
+        ["efa611e8b1821d55f6b759e6276ca0aa"],[1],
+        ["efa611e8b1821d55f6b759e651910c9c"],[2],
+        ["efa611e8b1821d55f6b759e6b0d74ee0"],[3],
+        ["efa611e8b1821d55f6b759e68b05260e"],[4],
+        ["efa611e8b1821d55f6b759e69e264def"],[5],
+        ["efa611e8b1821d55f6b759e673abf9cd"],[6],
+        ["efa511e8b1821d55f6b759e6f55b3ea8"],[7],
+        ["efa511e8b1821d55f6b759e6e20a7b47"],[8],
+        ["efa511e8b1821d55f6b759e6ce4c01f6"],[9],
+        ["efa611e8b1821d55f6b759e6c345a181"],[10],
+        ["efa611e8b1821d55f6b759e63c36215b"],[11]
+    ];
+    var cardId=GetQueryString("resourceId");
+    // var cardId="efa611e8b1821d55f6b759e651910c9c";
+    if(cardId!=null&&cardId.toString().length>0)
     {
-        console.log(picNum);
+        console.log(cardId);
     }
+    var  index;
+    var pageNum;
+    $.each(cardIdAll,function(idx){
+        if(cardIdAll[idx][0] == cardId){
+            index=idx;
+            console.log(idx)//idx为数组下标
+        }
+    });
+    console.log(index);
+
+    console.log( cardId.length);
+    if( cardId.length==32){
+        pageNum=index;
+    }else{
+        pageNum=cardId;
+    }
+
     var swiper = new Swiper('.banner.swiper-container', {
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
-        initialSlide :picNum,
+        initialSlide :pageNum,
     });
 
     var mYswiper = new Swiper('.case.swiper-container',{
@@ -538,7 +580,7 @@
     });
 </script>
 <div id="chinese">
-    <a href="chinese.html">
+    <a href="#">
         <img src="../img/chinese.png" alt="">
     </a>
 </div>
@@ -580,6 +622,20 @@
             $("#box .page").remove();
             $("#box").css("display","none");
         }, 250);
+    })
+    //点击返回首页
+    $('#chinese').click(function(){
+        if(typeof(index) !== "undefined"){
+            console.log("111");
+            if( typeof( goofypapaGame ) != "undefined" && goofypapaGame ){
+                window.location.href='goofypapa://back';
+            }else{
+                window.android.exitApp()
+            }
+        }else{
+            window.location.href = 'chinese.html';
+        }
+
     })
 
 </script>
